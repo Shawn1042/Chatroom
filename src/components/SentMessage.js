@@ -1,7 +1,15 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import SendMessageSound from '../assets/interface-124464.mp3'
 import styled from 'styled-components'
 
 const SentMessage = ({message}) => {
+
+
+  useEffect(() => {
+    const audio = new Audio(SendMessageSound);
+    audio.play();
+  }, []);  
+
   return (
     <Wrapper>
         <Bubble>{message.message}</Bubble>
