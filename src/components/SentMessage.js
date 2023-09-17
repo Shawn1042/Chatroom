@@ -1,14 +1,17 @@
-import React, { useEffect } from 'react'
-import SendMessageSound from '../assets/interface-124464.mp3'
-import styled from 'styled-components'
+import React, { useEffect, useRef } from 'react';
+import audioSrc from '../sounds/interface-124464.mp3'; 
+import styled from 'styled-components';
 
-const SentMessage = ({message}) => {
-
+const SentMessage = ({ message, playSound, setPlaySound }) => {
+  const audioRef = useRef(null);
 
   useEffect(() => {
-    const audio = new Audio(SendMessageSound);
-    audio.play();
-  }, []);  
+    if (playSound && audioRef.current) {
+      audioRef.current.play();
+      setPlaySound(false); // Reset the state once the sound has played.
+    }
+  }, [playSound, setPlaySound]);
+  
 
   return (
     <Wrapper>
@@ -19,11 +22,15 @@ const SentMessage = ({message}) => {
                 <img src={message.avatar} alt={message.name} />
             </Avatar>
         </Details>
+        <audio ref={audioRef} src={audioSrc} preload="auto" />
     </Wrapper>
   )
 }
 
-export default SentMessage
+export default SentMessage;
+
+
+
 
 const Wrapper = styled.div`
 display: flex;
